@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SMS TRANSLATION ASTRICON 2017</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/astricon.css">
+  </head>
+  <body style="font-family:Verdana">
+
+    <div class="container">
+      <div id="auth" class="form-signin">
+        <form method="post" id="form_auth">
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <label for="inputUsername" class="sr-only">Username</label>
+          <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus></input>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required></input>
+          <input class="btn btn-lg btn-primary btn-block" type="submit" id="send_auth"></input>
+        </form>
+      </div>
+
+      <div class="row" style="padding-top:40px;" id="sms">
+        <h3 class="text-center">SMS TRANSLATION ASTRICON 2017</h3>
+        <br/><br/>
+        <div class="col-md-8">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              SMS FLUX RECEIVED
+            </div>
+            <div class="panel-body">
+              <ul class="media-list">
+                <li class="media">
+                  <div class="media-body" id="recv_sms_area"></div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="panel-footer">
+              <div class="input-group">
+                <input type="text" class="form-control" id="send_sms_msg" placeholder="Enter Message" />
+                <span class="input-group-btn">
+                  <button class="btn btn-info" type="button" id="send_sms">SEND</button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              SMS PHONE RECEIVED
+            </div>
+            <div class="panel-body">
+              <ul class="media-list" id="recv_phone_area"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/moment-with-locales.min.js"></script>
+  <script src="js/astricon.js"></script>
+</html>
