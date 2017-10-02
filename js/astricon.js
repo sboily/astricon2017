@@ -64,20 +64,32 @@ function load_application(data) {
   on_sms_send();
 }
 
+function on_click_number(id) {
+  $('#'+id).on('click', function(e) {
+    $('#send_sms_number').val(id);
+  });
+}
+
 function on_sms_send() {
   $('#send_sms').on('click', function(e) {
     e.preventDefault();
     var sms = $('#send_sms_msg').val();
+    var number = $('#send_sms_number').val();
+    if (number == '' || sms == '') {
+      alert('Please enter message and number');
+      return false;
+    }
     $('#send_sms_msg').val('');
-    send_sms(sms, '14188050723');
+    $('#send_sms_number').val('');
+    send_sms(sms, number);
   });
 }
 
 function send_sms(msg, number) {
-  var msg = '/sms ' + number + ' ' + msg;
-  var msg = {
-    alias: '+14188050723',
-    msg: msg,
+  var text = '/sms ' + number + ' ' + msg;
+  var message = {
+    alias: '+14188000395',
+    msg: text,
     to: user_uuid
   };
 
@@ -88,17 +100,24 @@ function send_sms(msg, number) {
       'X-Auth-Token': token
     },
     method: 'POST',
-    body: JSON.stringify(msg),
+    body: JSON.stringify(message),
+  })
+  .then((response) => {
+    create_flux('+'+number, msg, 'right');
   });
 }
 
 function on_sms_received(data) {
-  var sms = data.data.msg;
   var sender = data.data.alias;
-  var d = moment().format('MMMM Do YYYY, h:mm:ss a');
-  var msg = sms + '<br/><small class="text-muted">' + sender + ' | '+ d + '</small>';
+  var msg = data.data.msg;
+  create_flux(sender, msg, 'left');
+}
 
-  var container = '<div class="media"><a class="pull-left" href="#"><img class="media-object img-circle" style="max-height:40px;" src="img/user.jpg" /></a><div class="media-body" id="sms_msg">'+msg+'</div></div>';
+function create_flux(sender, msg, direction) {
+  var d = moment().format('MMMM Do YYYY, h:mm:ss a');
+  var msg = msg + '<br/><small class="text-muted">' + sender + ' | '+ d + '</small>';
+
+  var container = '<div class="media"><a class="pull-'+direction+'" href="#"><img class="media-object img-circle" style="max-height:40px;" src="img/user.jpg" /></a><div class="media-body pull-'+direction+'" id="sms_msg">'+msg+'</div></div>';
 
   $('#recv_sms_area').append(container);
   add_phone_history(sender);
@@ -106,11 +125,13 @@ function on_sms_received(data) {
 
 
 function add_phone_history(number) {
+  var id = number.replace('+','');
   var d = moment().format('MMMM Do YYYY, h:mm:ss a');
-  var phone = '<h5 id="'+number+'">'+number+'</h5><small class="text-muted">'+d+'</small>';
+  var phone = '<h5><a href="#" id="'+id+'">'+number+'</a></h5><small class="text-muted">'+d+'</small>';
   var container = '<li class="media"><div class="media-body"><div class="media"><a class="pull-left" href="#"><img class="media-object img-circle" style="max-height:40px;" src="img/user.jpg" /></a><div class="media-body">' + phone + '</div></div></div></li>';
 
   $('#recv_phone_area').append(container);
+  on_click_number(id);
 
 }
 

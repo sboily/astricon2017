@@ -36,12 +36,13 @@
             </div>
 
             <div class="panel-footer">
-              <div class="input-group">
-                <input type="text" class="form-control" id="send_sms_msg" placeholder="Enter Message" />
-                <span class="input-group-btn">
+              <form class="form-inline">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="send_sms_msg" placeholder="Enter Message" required />
+                  <input type="text" class="form-control" id="send_sms_number" placeholder="Enter number" required />
                   <button class="btn btn-info" type="button" id="send_sms">SEND</button>
-                </span>
-              </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -49,7 +50,7 @@
         <div class="col-md-4">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              SMS PHONE RECEIVED
+              SMS PHONE COLLECTED
             </div>
             <div class="panel-body">
               <ul class="media-list" id="recv_phone_area"></ul>
